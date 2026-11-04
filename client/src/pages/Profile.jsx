@@ -87,7 +87,7 @@ const Profile = () => {
           </button>
         </form>
         <img
-          className="max-w-44 h-44 max-sm:w-30 max-sm:h-30 rounded-full mx-10 "
+          className="max-w-44 h-44 max-sm:w-20 max-sm:h-20 object-cover mt-2 rounded-full mx-10 "
           src={authUser?.profilePic || assets.avatar_icon}
           alt=""
         />
