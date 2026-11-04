@@ -81,11 +81,11 @@ const ChatSection = () => {
     <div
       className={`flex flex-col px-5 w-1/2 bg-gray-200 ${
         selectedUser && !showRight ? "max-md:w-full" : "max-md:hidden"
-      } max-h-[90vh] my-auto`}
+      } h-full`}
     >
       {/* HEADER */}
       <div
-        className="flex items-center gap-4 border-b border-b-white px-2 py-3 shrink-0 cursor-pointer"
+        className="flex items-center gap-4 border-b border-b-white px-2 py-3 hrink-0 sticky top-0 bg-gray-200 z-10 cursor-pointer"
       >
         <IoArrowBack
           onClick={() =>setSelectedUser(null)}

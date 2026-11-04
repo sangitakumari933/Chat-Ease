@@ -47,7 +47,7 @@ export const ChatProvider = ({ children }) => {
   const sendMessage = async (messageData) => {
     try {
       console.log("sending image");
-      
+
       const { data } = await axios.post(
         `/api/messages/send/${selectedUser._id}`,
         messageData,
@@ -75,15 +75,10 @@ export const ChatProvider = ({ children }) => {
         axios.put(`/api/message/mark/${newMessage._id}`);
       } else {
         console.log("pipi");
-        console.log(refreshUser)
-        setRefreshUser(refreshUser=>!refreshUser);
-         console.log(refreshUser)
-         console.log("dono")
-        // setUnseenMessages((prevUnseenMessages)=>({
-        //   ...prevUnseenMessages, [newMessage.senderId] :
-        //   prevUnseenMessages[newMessage.senderId] ? prevUnseenMessages[newMessage.senderId] + 1 : 1
-        // })
-        // )
+        console.log(refreshUser);
+        setRefreshUser((refreshUser) => !refreshUser);
+        console.log(refreshUser);
+        console.log("dono");
       }
       //setRefreshUser(!refreshUser);
     });
@@ -95,9 +90,25 @@ export const ChatProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    subscribeToMessages();
+    if (!socket) return;
+
+    const handleNewMessage = (newMessage) => {
+      if (selectedUser && newMessage.senderId === selectedUser._id) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { ...newMessage, seen: true },
+        ]);
+
+        axios.put(`/api/message/mark/${newMessage._id}`);
+      } else {
+        setRefreshUser((prev) => !prev);
+      }
+    };
+
+    socket.on("newMessage", handleNewMessage);
+
     return () => {
-      unsubscribeFromMessages();
+      socket.off("newMessage", handleNewMessage);
     };
   }, [socket, selectedUser]);
 
@@ -114,7 +125,7 @@ export const ChatProvider = ({ children }) => {
     setUnseenMessages,
     refreshUser,
     showRight,
-    setShowRight
+    setShowRight,
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
