@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 export const isAunthenticated = async (req, res, next) => {
   try {
+    console.log(req.cookies);
     const { token } = req.cookies;
 
     if (!token) {

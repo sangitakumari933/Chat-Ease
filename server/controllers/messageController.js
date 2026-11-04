@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import Message from "../models/Message.js";
 import cloudinary from "../config/cloudinary.js";
 import { io, userSocketMap } from "../server.js";
-import fs from "fs";
+
 
 export const getUserForSideBar = async (req, res) => {
   try {
@@ -26,6 +26,8 @@ export const getUserForSideBar = async (req, res) => {
         receiverId: currentUserId,
         seen: false,
       });
+
+      console.log("reached end");
 
       return {
         ...user.toObject(),

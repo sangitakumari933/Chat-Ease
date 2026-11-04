@@ -22,9 +22,7 @@ export const ChatProvider = ({ children }) => {
       console.log("getUsers");
       const { data } = await axios.get("/api/messages/users");
       setUsers(data.users);
-      console.log("fetched new user list");
-      console.log(data.users);
-
+      console.log("Fetched new user list:", data);
     } catch (error) {
       toast.error(error.message);
     }

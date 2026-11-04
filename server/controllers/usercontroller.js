@@ -42,8 +42,10 @@ export const signUp = async (req, res) => {
     return res
       .status(201)
       .cookie("token", token, {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .json({
         message: "Account created succesully",
@@ -93,8 +95,10 @@ export const login = async (req, res) => {
     return res
       .status(201)
       .cookie("token", token, {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .json({
         message: "Login succesully",
@@ -152,22 +156,22 @@ export const updateProfile = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
-    try {
-      res.clearCookie("token", {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-      });
-      return res.status(200).json({
-        success: true,
-        message: "Logged out successfully",
-      });
-    } catch (error) {
-      console.log(error);
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.log(error);
 
-      return res.status(500).json({
-        success: false,
-        message: "Logout failed",
-      });
-    }
-  };
+    return res.status(500).json({
+      success: false,
+      message: "Logout failed",
+    });
+  }
+};
