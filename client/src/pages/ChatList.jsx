@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 
 const ChatList = () => {
-  const { selectedUser } = useContext(ChatContext);
+  const { selectedUser} = useContext(ChatContext);
 
   return (
     <div className="flex items-center justify-center  w-full h-screen relative ">

@@ -10,6 +10,7 @@ import { assets } from "../assets/assets";
 import { useEffect } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
+import { IoArrowBack } from "react-icons/io5";
 
 const ChatSection = () => {
   const {
@@ -19,6 +20,7 @@ const ChatSection = () => {
     getMessages,
     setShowRight,
     showRight,
+    setSelectedUser
   } = useContext(ChatContext);
 
   const { authUser, onlineUsers } = useContext(AuthContext);
@@ -83,10 +85,13 @@ const ChatSection = () => {
     >
       {/* HEADER */}
       <div
-        onClick={() => setShowRight(true)}
         className="flex items-center gap-4 border-b border-b-white px-2 py-3 shrink-0 cursor-pointer"
       >
-        <img
+        <IoArrowBack
+          onClick={() =>setSelectedUser(null)}
+          className="hidden max-md:block text-2xl cursor-pointer"
+        />
+        <img onClick={() => setShowRight(true)}
           src={selectedUser?.profilePic || assets.avatar_icon}
           alt=""
           className="w-15 h-15 rounded-full object-cover"

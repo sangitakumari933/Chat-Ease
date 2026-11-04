@@ -2,13 +2,21 @@ import React from "react";
 import { useContext } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { assets } from "../assets/assets";
+import { IoArrowBack } from "react-icons/io5";
 
 const RightSection = () => {
-  const { selectedUser, showRight } = useContext(ChatContext);
+  const { selectedUser, showRight, setSelectedUser, setShowRight } =
+    useContext(ChatContext);
   return (
     <div
       className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1`}
     >
+      <IoArrowBack
+        onClick={() => {
+          (setSelectedUser(null), setShowRight(false));
+        }}
+        className="hidden max-md:block text-2xl cursor-pointer ml-2 mt-2 "
+      />
       <div className="flex flex-col gap-2 w-full  items-center p-2">
         <img
           src={selectedUser?.profilePic || assets.avatar_icon}
