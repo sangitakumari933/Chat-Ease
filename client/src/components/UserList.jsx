@@ -46,7 +46,7 @@ const UserList = () => {
 
   return (
     <div
-      className={`flex flex-col max-md:w-full z-10 ${!selectedUser ? "md:w-1/2" : "md:w-1/4"} ${selectedUser ? "max-md:hidden" : ""} max-h-screen `}
+      className={`flex flex-col max-md:w-full z-10 ${!selectedUser ? "md:w-1/2" : "md:w-1/4"} ${selectedUser ? "max-md:hidden" : ""} max-h-[90vh] my-auto `}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">

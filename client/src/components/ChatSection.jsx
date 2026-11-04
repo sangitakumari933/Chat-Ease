@@ -81,7 +81,7 @@ const ChatSection = () => {
     <div
       className={`flex flex-col px-5 w-1/2 bg-gray-200 ${
         selectedUser && !showRight ? "max-md:w-full" : "max-md:hidden"
-      } max-h-screen`}
+      } max-h-[90vh] my-auto`}
     >
       {/* HEADER */}
       <div
