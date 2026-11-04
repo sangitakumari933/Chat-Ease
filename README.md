@@ -32,7 +32,7 @@ ChatEase is a full-stack real-time messaging application that allows users to co
 - Cloudinary
 
 ## 📂 Project Structure
-
+```text
 ChatEase/
 │
 ├── client/
@@ -66,6 +66,7 @@ ChatEase/
 │
 ├── .gitignore
 └── README.md
+```
 
 ## ⚙️ Installation and Setup
 
