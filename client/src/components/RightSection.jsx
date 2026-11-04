@@ -9,11 +9,11 @@ const RightSection = () => {
     useContext(ChatContext);
   return (
     <div
-      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1`}
+      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1 max-h-screen`}
     >
       <IoArrowBack
         onClick={() => {
-          (setSelectedUser(null), setShowRight(false));
+          (setShowRight(false));
         }}
         className="hidden max-md:block text-2xl cursor-pointer ml-2 mt-2 "
       />
