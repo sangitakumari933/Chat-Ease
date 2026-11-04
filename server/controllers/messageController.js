@@ -102,15 +102,16 @@ export const sendMessage = async (req, res) => {
 
     let imageUrl = "";
     if (req.file) {
-      const uploadResponse = await cloudinary.uploader.upload(req.file.path);
-      imageUrl = uploadResponse.secure_url;
-      fs.unlink(req.file.path, (err) => {
-        if (err) {
-          console.log("Error deleting local image:", err);
-        } else {
-          console.log("Local image deleted successfully");
-        }
-      });
+      cloudinary.uploader
+        .upload_stream({ resource_type: "image" }, (error, result) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+
+          console.log(result.secure_url);
+        })
+        .end(req.file.buffer);
     }
 
     const newMessage = await Message.create({
