@@ -43,7 +43,6 @@ export const getUserForSideBar = async (req, res) => {
     const finalUsers = usersWithTimestamps.map(
       ({ sortTimestamp, ...user }) => user,
     );
-    console.log(finalUsers);
     res.json({ success: true, users: finalUsers });
   } catch (error) {
     return res.json({
