@@ -8,13 +8,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-
 const UserList = () => {
   const navigate = useNavigate();
   const { getUsers, users, selectedUser, setSelectedUser, refreshUser } =
     useContext(ChatContext);
   const { onlineUsers, authUser, axios, setAuthUser } = useContext(AuthContext);
   const [input, setInput] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const filteredUsers = input
     ? users.filter((user) =>
@@ -55,30 +55,47 @@ const UserList = () => {
             ChatEase
           </h1>
         </div>
-        <div className="relative group py-1 ">
+        <div className="relative py-1">
           <button
-            onClick={() => {
-              () => navigate("/profile");
-            }}
-            className="text-xl font-bold  hover:text-gray-800 mr-2 cursor-pointer"
+            onClick={() => setShowMenu((prev) => !prev)}
+            className="text-2xl font-bold hover:text-gray-800 mr-3 cursor-pointer"
           >
             ⋮
           </button>
-          <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-gray-200 border border-gray-600  hidden group-hover:block">
-            <p
-              onClick={() => navigate("/profile")}
-              className="cursor-pointer text-sm text-gray-700"
-            >
-              Edit Profile
-            </p>
-            <hr className="my-2 border-t border-gray-500" />
-            <p
-              onClick={() => logout()}
-              className="cursor-pointer text-sm text-gray-700"
-            >
-              Logout
-            </p>
-          </div>
+
+          {showMenu && (
+            <>
+              {/* Close menu when clicking outside */}
+              <div
+                className="fixed inset-0 z-10"
+                onClick={() => setShowMenu(false)}
+              ></div>
+
+              <div className="absolute top-full right-0 z-20 w-36 p-4 rounded-md bg-gray-200 border border-gray-400 shadow-lg">
+                <p
+                  onClick={() => {
+                    navigate("/profile");
+                    setShowMenu(false);
+                  }}
+                  className="cursor-pointer text-sm text-gray-700"
+                >
+                  Edit Profile
+                </p>
+
+                <hr className="my-2 border-t border-gray-400" />
+
+                <p
+                  onClick={() => {
+                    setShowMenu(false);
+                    logout();
+                  }}
+                  className="cursor-pointer text-sm text-gray-700"
+                >
+                  Logout
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="flex items-center w-[90%] m-auto gap-2 border border-gray-500 rounded-2xl px-2 py-1">

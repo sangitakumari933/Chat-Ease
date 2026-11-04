@@ -96,7 +96,7 @@ export const sendMessage = async (req, res) => {
   try {
     const receiverId = req.params.id;
     const senderId = req.user._id;
-    console.log(req.body);
+   
     let text = "";
     if (req.body.text) {
       text = req.body.text;
@@ -104,18 +104,22 @@ export const sendMessage = async (req, res) => {
 
     let imageUrl = "";
     if (req.file) {
-      cloudinary.uploader
-        .upload_stream({ resource_type: "image" }, (error, result) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
+      imageUrl = await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            { resource_type: "image" },
+            (error, result) => {
+              if (error) {
+                return reject(error);
+              }
 
-          console.log(result.secure_url);
-        })
-        .end(req.file.buffer);
+              resolve(result.secure_url);
+            }
+          )
+          .end(req.file.buffer);
+      });
     }
-
+    console.log(imageUrl); 
     const newMessage = await Message.create({
       senderId,
       receiverId,
