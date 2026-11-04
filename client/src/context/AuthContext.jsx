@@ -51,7 +51,6 @@ export const AuthProvider = ({children})=>{
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(response);
       toast.error(error.data.message || "Something went wrong")
     }
   }
