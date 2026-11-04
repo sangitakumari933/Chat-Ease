@@ -19,7 +19,10 @@ const server = http.createServer(app);
 //instialize socket.io server
 export const io = new Server(server, {
    cors: {
-    origin: "https://chat-ease-client.vercel.app",
+    origin: [
+      "http://localhost:5173",
+      "https://chat-ease-client.vercel.app"
+    ],
     credentials: true,
   },
 });
@@ -50,7 +53,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://chat-ease-client.vercel.app"
+    ],
     credentials: true,
   })
 );
