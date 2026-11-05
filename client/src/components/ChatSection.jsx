@@ -76,26 +76,28 @@ const ChatSection = () => {
       } h-full`}
     >
       {/* HEADER */}
-      <div className="flex items-center gap-4 border-b border-b-white px-2 py-3 hrink-0 sticky top-0 bg-gray-200 z-10 cursor-pointer">
+      <div className="flex items-center gap-4 border-b border-b-white px-2 py-3 srink-0 sticky top-0 bg-gray-200 z-10 cursor-pointer">
         <IoArrowBack
           onClick={() => setSelectedUser(null)}
-          className="hidden max-md:block text-2xl cursor-pointer"
+          className="hidden max-md:block text-2xl text-gray-600 cursor-pointer"
         />
-        <img
-          onClick={() => setShowRight(true)}
-          src={selectedUser?.profilePic || assets.avatar_icon}
-          alt=""
-          className="w-15 h-15 rounded-full object-cover"
-        />
+        
+          <img
+            onClick={() => setShowRight(true)}
+            src={selectedUser?.profilePic || assets.avatar_icon}
+            alt=""
+            className="w-15 h-15 rounded-full object-cover"
+          />
 
-        <p className="font-medium text-gray-800 text-xl flex items-center gap-2">
-          {selectedUser?.fullName}
+          <p className="font-medium text-gray-800 text-xl flex items-center gap-2 truncate max-[400px]:text-base">
+            {selectedUser?.fullName}
 
-          {onlineUsers.includes(selectedUser?._id) && (
-            <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
-          )}
-        </p>
-      </div>
+            {onlineUsers.includes(selectedUser?._id) && (
+              <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+            )}
+          </p>
+        </div>
+      
 
       {/* MESSAGES */}
       <div className="flex-1 min-h-0 overflow-y-auto p-1">

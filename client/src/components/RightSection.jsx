@@ -25,9 +25,9 @@ const RightSection = () => {
         onClick={() => {
           setShowRight(false);
         }}
-        className="hidden max-md:block text-2xl cursor-pointer ml-2 mt-2 "
+        className="hidden max-md:block text-2xl text-gray-600 cursor-pointer ml-2 mt-2 "
       />
-      <div className="flex flex-col gap-2 w-full  items-center p-2">
+      <div className="flex flex-col gap-2 w-full items-center p-2">
         <img
           src={selectedUser?.profilePic || assets.avatar_icon}
           alt="profile-pic"
