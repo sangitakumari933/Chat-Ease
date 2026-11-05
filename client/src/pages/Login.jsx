@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const Login = () => {
   const [currState, setCurrState] = useState("Sign Up");
@@ -11,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useContext(AuthContext);
+  const { login,setAuthUser } = useContext(AuthContext);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -20,6 +22,21 @@ const Login = () => {
       email,
       password,
     });
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      const { data } = await axios.post("/api/auth/guest");
+
+      if (data.success) {
+        setAuthUser(data.user);
+        toast.success("you are signed up");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.data?.message || "Guest login failed");
+    }
   };
 
   return (
@@ -110,6 +127,13 @@ const Login = () => {
               </p>
             )}
           </div>
+          <button
+            type="button"
+            onClick={handleGuestLogin}
+            className="w-full py-2.5 rounded-full border border-gray-400 text-gray-700 font-medium hover:bg-gray-100 transition-all duration-200"
+          >
+            Continue as Guest
+          </button>
         </div>
       </div>
     </div>

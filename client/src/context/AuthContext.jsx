@@ -39,7 +39,6 @@ export const AuthProvider = ({children})=>{
   const login = async (state, credentials)=>{
     
     try {
-      console.log("calling backend");
       const {data} = await axios.post(`/api/auth/${state}`, credentials);
       
       if(data.success){

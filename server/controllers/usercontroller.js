@@ -109,6 +109,37 @@ export const login = async (req, res) => {
   }
 };
 
+export const guestLogin = async (req, res) => {
+  try {
+    const guestUser = await User.create({
+      fullName: `Guest_${Date.now()}`,
+      email: `guest_${Date.now()}@example.com`,
+      password: "guest123",
+      bio: "I'm using ChatEase as a guest",
+    });
+
+    const token = generateToken(guestUser._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      success: true,
+      user: guestUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 //controller to check if user is authenticated or not
 
 export const checkAuth = (req, res) => {
