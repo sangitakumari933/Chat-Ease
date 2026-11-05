@@ -19,7 +19,7 @@ const RightSection = () => {
 
   return (
     <div
-      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1 h-[90%]`}
+      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1 h-full`}
     >
       <IoArrowBack
         onClick={() => {

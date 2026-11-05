@@ -16,7 +16,7 @@ const ChatList = () => {
         alt="background"
         className="absolute w-full h-full object-cover inset-0 z-0"
       />
-      <div className="flex z-10 max-lg:w-[90%] w-[80%] h-[90%] border border-gray-400 bg-gray-100/70 rounded-md ">
+      <div className="flex z-10 max-lg:w-[90%] w-[80%] h-[90%] max-sm:h-[80%] border border-gray-400 bg-gray-100/70 rounded-md ">
         <UserList />
         {selectedUser ? (
           <>
