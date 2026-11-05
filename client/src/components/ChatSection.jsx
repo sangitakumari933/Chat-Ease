@@ -20,12 +20,10 @@ const ChatSection = () => {
     getMessages,
     setShowRight,
     showRight,
-    setSelectedUser
+    setSelectedUser,
   } = useContext(ChatContext);
 
   const { authUser, onlineUsers } = useContext(AuthContext);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
 
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
@@ -40,36 +38,30 @@ const ChatSection = () => {
   };
 
   //handle sending an image
-  const handleSendImage = (e) => {
-    console.log(e.target);
+  const handleSendImage = async (e) => {
     const file = e.target.files[0];
+
     if (!file || !file.type.startsWith("image/")) {
-      toast.error("select an image file");
+      toast.error("Select an image file");
       return;
     }
 
-    setSelectedImage(file);
-    setImagePreview(URL.createObjectURL(file));
-    e.target.value = "";
-  };
-
-  const sendImage = async () => {
     const formData = new FormData();
 
-    formData.append("image", selectedImage);
+    formData.append("image", file);
 
     await sendMessage(formData);
 
-    URL.revokeObjectURL(imagePreview);
-    setSelectedImage(null);
-    setImagePreview(null);
+    e.target.value = "";
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [messages, imagePreview]);
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (selectedUser) {
@@ -84,14 +76,13 @@ const ChatSection = () => {
       } h-full`}
     >
       {/* HEADER */}
-      <div
-        className="flex items-center gap-4 border-b border-b-white px-2 py-3 hrink-0 sticky top-0 bg-gray-200 z-10 cursor-pointer"
-      >
+      <div className="flex items-center gap-4 border-b border-b-white px-2 py-3 hrink-0 sticky top-0 bg-gray-200 z-10 cursor-pointer">
         <IoArrowBack
-          onClick={() =>setSelectedUser(null)}
+          onClick={() => setSelectedUser(null)}
           className="hidden max-md:block text-2xl cursor-pointer"
         />
-        <img onClick={() => setShowRight(true)}
+        <img
+          onClick={() => setShowRight(true)}
           src={selectedUser?.profilePic || assets.avatar_icon}
           alt=""
           className="w-15 h-15 rounded-full object-cover"
@@ -145,34 +136,6 @@ const ChatSection = () => {
         <div ref={messagesEndRef}></div>
       </div>
 
-      {imagePreview && (
-        <div className="relative p-3 bg-gray-100 rounded-xl w-fit mb-2">
-          <img
-            src={imagePreview}
-            alt="preview"
-            className=" h-36 object-cover rounded-lg"
-          />
-
-          <button
-            onClick={() => {
-              URL.revokeObjectURL(imagePreview);
-              setImagePreview(null);
-              setSelectedImage(null);
-            }}
-            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6"
-          >
-            x
-          </button>
-
-          <button
-            onClick={sendImage}
-            className="mt-2 bg-green-500 text-white px-4 py-1 rounded-full text-sm"
-          >
-            Send Image
-          </button>
-        </div>
-      )}
-
       {/* INPUT */}
       <div className="flex items-center gap-3 p-3 shrink-0">
         <div className="flex items-center flex-1 bg-gray-100 px-3 rounded-full">
@@ -182,7 +145,7 @@ const ChatSection = () => {
             onKeyDown={(e) => (e.key === "Enter" ? handleSendMessage(e) : null)}
             type="text"
             placeholder="send a message"
-            className="flex-1 text-sm p-3 outline-none"
+            className="flex-1 max-[380px] w-[70%] text-sm p-3 outline-none"
           />
 
           <input
@@ -200,7 +163,7 @@ const ChatSection = () => {
 
         <div
           onClick={handleSendMessage}
-          className="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center"
+          className="w-8 h-8 max-md:w-6 max-md:h-6 bg-green-400 rounded-full flex items-center justify-center"
         >
           <LuSendHorizontal className="text-white cursor-pointer" />
         </div>

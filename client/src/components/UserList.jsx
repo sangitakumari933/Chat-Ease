@@ -10,8 +10,14 @@ import { AuthContext } from "../context/AuthContext";
 
 const UserList = () => {
   const navigate = useNavigate();
-  const { getUsers, users, selectedUser, setSelectedUser, refreshUser } =
-    useContext(ChatContext);
+  const {
+    getUsers,
+    users,
+    selectedUser,
+    setSelectedUser,
+    unseenMessages,
+    setUnseenMessages,
+  } = useContext(ChatContext);
   const { onlineUsers, authUser, axios, setAuthUser } = useContext(AuthContext);
   const [input, setInput] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -24,9 +30,7 @@ const UserList = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.post(
-        "/api/auth/logout",
-      );
+      const response = await axios.post("/api/auth/logout");
 
       if (response.data.success) {
         console.log("logout");
@@ -41,8 +45,8 @@ const UserList = () => {
 
   useEffect(() => {
     getUsers(authUser?._id);
-    console.log("get the users");
-  }, [refreshUser]);
+    
+  }, [onlineUsers]);
 
   return (
     <div
@@ -111,7 +115,7 @@ const UserList = () => {
         {filteredUsers.map((user) => (
           <div
             onClick={() => {
-              setSelectedUser(user);
+              setSelectedUser(user); setUnseenMessages((prev=>({...prev, [user._id]:0})))
             }}
             key={user._id}
             className="flex items-center px-2 py-2 hover:bg-gray-200 rounded-md relative"
@@ -129,9 +133,9 @@ const UserList = () => {
                 <p className="text-nuetral-400 text-sm">offline</p>
               )}
             </div>
-            {user.unseenCount > 0 && (
+            {unseenMessages[user._id] > 0 && (
               <p className="absolute top-4 right-4 text-xs bg-green-500/50 h-5 w-5 flex items-center justify-center text-white rounded-full">
-                {user.unseenCount}
+                {unseenMessages[user._id]}
               </p>
             )}
           </div>

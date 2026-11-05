@@ -8,15 +8,11 @@ export const signUp = async (req, res) => {
   console.log("SIGNUP REQUEST RECEIVED");
   try {
     if (!fullName || !email || !password) {
-      console.log(fullName);
-      console.log(email);
-      console.log(password);
 
       return res.json({ success: false, message: "Missing Details" });
     }
     const user = await User.findOne({ email });
 
-    console.log("Checking user...");
     if (user)
       return res.json({ success: false, message: "Account already exists" });
 
@@ -29,7 +25,6 @@ export const signUp = async (req, res) => {
     });
 
     const token = generateToken(newUser._id);
-    console.log(newUser);
 
     const userData = {
       _id: newUser._id,

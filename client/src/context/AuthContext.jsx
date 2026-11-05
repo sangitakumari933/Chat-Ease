@@ -51,7 +51,7 @@ export const AuthProvider = ({children})=>{
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.data.message || "Something went wrong")
+      toast.error("Something went wrong")
     }
   }
 
@@ -64,6 +64,7 @@ export const AuthProvider = ({children})=>{
         userId: userData._id
       }
     });
+    newSocket.connect();
     setSocket(newSocket);
 
     newSocket.on("getOnlineUsers", (userIds)=>{

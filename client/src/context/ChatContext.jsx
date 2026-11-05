@@ -21,8 +21,10 @@ export const ChatProvider = ({ children }) => {
     try {
       console.log("getUsers");
       const { data } = await axios.get("/api/messages/users");
-      setUsers(data.users);
-      console.log("Fetched new user list:", data);
+      if(data.success){
+        setUsers(data.users);
+        setUnseenMessages(data.unseenMessages);
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -32,11 +34,8 @@ export const ChatProvider = ({ children }) => {
   const getMessages = async (userId) => {
     try {
       const { data } = await axios.get(`/api/messages/get-messages/${userId}`);
-      console.log(data);
       if (data.success) {
         setMessages(data.messages);
-        setRefreshUser(!refreshUser);
-        console.log("message", data.messages);
       }
     } catch (error) {
       toast.error(error.message);
@@ -52,11 +51,8 @@ export const ChatProvider = ({ children }) => {
         `/api/messages/send/${selectedUser._id}`,
         messageData,
       );
-      console.log(data);
       if (data.success) {
-        setRefreshUser(!refreshUser);
         setMessages((prevMessage) => [...prevMessage, data.newMessage]);
-        console.log("success");
       } else {
         toast.error(data.message);
       }
@@ -68,19 +64,18 @@ export const ChatProvider = ({ children }) => {
   //function to subscribe to messages for selected user
   const subscribeToMessages = async () => {
     if (!socket) return;
-    socket.on("newMessage", (newMessage) => {
+    socket.on("newMessage", async (newMessage) => {
       if (selectedUser && newMessage.senderId === selectedUser._id) {
+        console.log("hello");
         newMessage.seen = true;
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-        axios.put(`/api/message/mark/${newMessage._id}`);
+        const res = await axios.put(`/api/messages/mark/${newMessage._id}`);
+        console.log(res);
       } else {
-        console.log("pipi");
-        console.log(refreshUser);
-        setRefreshUser((refreshUser) => !refreshUser);
-        console.log(refreshUser);
-        console.log("dono");
+        setUnseenMessages((prevUnseenMessages)=>({
+          ...prevUnseenMessages, [newMessage.senderId]:prevUnseenMessages[newMessage.senderId] ? prevUnseenMessages[newMessage.senderId] + 1 : 1
+        }))
       }
-      //setRefreshUser(!refreshUser);
     });
   };
 
@@ -90,25 +85,10 @@ export const ChatProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!socket) return;
-
-    const handleNewMessage = (newMessage) => {
-      if (selectedUser && newMessage.senderId === selectedUser._id) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { ...newMessage, seen: true },
-        ]);
-
-        axios.put(`/api/message/mark/${newMessage._id}`);
-      } else {
-        setRefreshUser((prev) => !prev);
-      }
-    };
-
-    socket.on("newMessage", handleNewMessage);
-
+    subscribeToMessages(); 
+    console.log("unseen:", unseenMessages);
     return () => {
-      socket.off("newMessage", handleNewMessage);
+      unsubscribeFromMessages();
     };
   }, [socket, selectedUser]);
 
