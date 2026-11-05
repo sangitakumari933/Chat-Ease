@@ -6,6 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [currState, setCurrState] = useState("Sign Up");
@@ -27,15 +28,13 @@ const Login = () => {
   const handleGuestLogin = async () => {
     try {
       const { data } = await axios.post("/api/auth/guest");
-
       if (data.success) {
         setAuthUser(data.user);
         toast.success("you are signed up");
-        navigate("/");
       }
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.data?.message || "Guest login failed");
+      console.log(error.message)
+      toast.error("Guest login failed");
     }
   };
 
