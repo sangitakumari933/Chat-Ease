@@ -14,7 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login,setAuthUser } = useContext(AuthContext);
+  const { login, setAuthUser } = useContext(AuthContext);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -25,16 +25,18 @@ const Login = () => {
     });
   };
 
-  const handleGuestLogin = async () => {
-    try {
-      const { data } = await axios.post("/api/auth/guest");
-      if (data.success) {
-        setAuthUser(data.user);
-        toast.success("you are signed up");
-      }
-    } catch (error) {
-      console.log(error.message)
-      toast.error("Guest login failed");
+  const demoLogin = async () => {
+    const response = await axios.post("api/user/login", {
+      email: "demo@gmail.com",
+      password: "demo12",
+    });
+    if (response.data.success) {
+      setAuthUser(data.userData);
+      connectSocket(data.userData);
+      toast.success(data.message);
+      navigate("/");
+    } else {
+      alert(response.data.message);
     }
   };
 
@@ -128,7 +130,7 @@ const Login = () => {
           </div>
           <button
             type="button"
-            onClick={handleGuestLogin}
+            onClick={demoLogin}
             className="w-full py-2.5 rounded-full border border-gray-400 text-gray-700 font-medium hover:bg-gray-100 transition-all duration-200"
           >
             Continue as Guest
