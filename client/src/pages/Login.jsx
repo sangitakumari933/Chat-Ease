@@ -26,7 +26,7 @@ const Login = () => {
   };
 
   const demoLogin = async () => {
-    const response = await axios.post("/api/user/login", {
+    const response = await axios.post("/api/auth/login", {
       email: "demo@gmail.com",
       password: "demo12",
     });
