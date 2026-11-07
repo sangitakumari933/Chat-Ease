@@ -81,6 +81,7 @@ cd ChatEase
 
 
 cd client
+
 npm install
 
 
@@ -88,6 +89,7 @@ npm install
 
 
 cd ../server
+
 npm install
 
 
