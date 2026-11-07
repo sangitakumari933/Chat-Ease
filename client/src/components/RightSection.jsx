@@ -19,7 +19,7 @@ const RightSection = () => {
 
   return (
     <div
-      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1 h-full`}
+      className={`flex flex-col ${!showRight ? "max-md:hidden" : ""} flex-1 h-full min-h-0 overflow-hidden`}
     >
       <IoArrowBack
         onClick={() => {
@@ -45,17 +45,17 @@ const RightSection = () => {
       <div className="flex flex-col flex-1 p-2 overflow-y-auto ">
         <p className="shrink-0">Media</p>
 
-        <div className="mt-2 flex-1 rounded-md grid grid-cols-2 gap-4 opacity-90">
+        <div className="mt-2  rounded-md grid grid-cols-2 gap-4 opacity-90">
           {msgImages.map((url, index) => (
             <div
               key={index}
               onClick={() => window.open(url)}
-              className="rounded-md cursor-pointer"
+              className="rounded-md cursor-pointer "
             >
               <img
                 src={url}
                 alt="Shared media"
-                className="h-full w-full  object-contain rounded-md"
+                className="rounded-md"
               />
             </div>
           ))}
