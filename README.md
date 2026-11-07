@@ -72,7 +72,8 @@ ChatEase/
 ### 1. Clone the repository
 
 
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/sangitakumari933/Chat-Ease.git
+
 cd ChatEase
 
 
