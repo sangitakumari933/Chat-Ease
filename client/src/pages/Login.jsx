@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { useState } from "react";
-import { useRef } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -30,10 +28,11 @@ const Login = () => {
       email: "demo@gmail.com",
       password: "demo12",
     });
+    console.log(response.data);
     if (response.data.success) {
-      setAuthUser(data.userData);
-      connectSocket(data.userData);
-      toast.success(data.message);
+      setAuthUser(response.data.userData);
+      connectSocket(response.data.userData);
+      toast.success(response.data.message);
       navigate("/");
     } else {
       alert(response.data.message);

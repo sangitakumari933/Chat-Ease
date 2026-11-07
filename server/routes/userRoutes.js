@@ -1,5 +1,5 @@
 import express from "express"
-import { checkAuth, guestLogin, login, logoutUser, signUp, updateProfile } from "../controllers/usercontroller.js";
+import { checkAuth, login, logoutUser, signUp, updateProfile } from "../controllers/usercontroller.js";
 import { isAunthenticated } from "../middleware/auth.js";
 import console from "console";
 const userRouter = express.Router();
