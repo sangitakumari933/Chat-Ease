@@ -58,7 +58,6 @@ ChatEase/
 │   ├── middleware/
 │   ├── models/
 │   ├── routes/
-│   ├── uploads/
 │   ├── utils/
 │   ├── package.json
 │   ├── package-lock.json
@@ -87,7 +86,7 @@ npm install
 ### 3. Install backend dependencies
 
 
-cd server
+cd ../server
 npm install
 
 
@@ -98,7 +97,7 @@ Create a `.env` file inside the server directory.
 
 MONGODB_URI=mongodb+srv://kumarisangita8800_db_user:bhuEvWmnjmkGQI6K@cluster0.era43kj.mongodb.net
 
-PORT= 5000
+PORT= 3000
 
 JWT_SECRET=sangita123secret
 
@@ -139,15 +138,16 @@ npm run dev
 
 ## 📸 Screenshots
 
-Add screenshots of your application here.
+<img width="1606" height="842" alt="Screenshot 2026-11-07 111213" src="https://github.com/user-attachments/assets/da7c4ade-592b-4599-a30d-4e39560602ca" />
+<img width="1382" height="706" alt="Screenshot 2026-11-07 111329" src="https://github.com/user-attachments/assets/75adb31c-74b2-40ae-ab66-2636755a9abd" />
 
-## 👨‍💻 Author
 
-**Your Name**
 
-- GitHub: [Your GitHub Profile](YOUR_GITHUB_PROFILE_URL)
-- LinkedIn: [Your LinkedIn Profile](YOUR_LINKEDIN_PROFILE_URL)
+
+**Sangita Kumari**
+
+- GitHub: [(GITHUB)](https://github.com/sangitakumari933)
+- LinkedIn: [(LINKEDIN)](https://www.linkedin.com/in/sangita-kumari/)
+- Live Link : https://chat-ease-client.vercel.app/
 
 ---
-
-⭐ If you like this project, consider giving it a star!
