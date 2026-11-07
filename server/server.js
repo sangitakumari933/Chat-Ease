@@ -20,7 +20,7 @@ const server = http.createServer(app);
 export const io = new Server(server, {
    cors: {
     origin: [
-      "http://localhost:5173",
+      "http://localhost:5175",
       "https://chat-ease-client.vercel.app"
     ],
     credentials: true,

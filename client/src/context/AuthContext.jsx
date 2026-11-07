@@ -102,7 +102,8 @@ useEffect(() => {
     login,
     updateProfile,
     onlineUsers,
-    setAuthUser
+    setAuthUser,
+    connectSocket,
   }
 
   return (
