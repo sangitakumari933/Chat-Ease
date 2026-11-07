@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, setAuthUser } = useContext(AuthContext);
+  const { login, setAuthUser, connectSocket } = useContext(AuthContext);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
